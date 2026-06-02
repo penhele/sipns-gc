@@ -1,21 +1,12 @@
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
 } from "@/components/ui/card";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Eye } from "lucide-react";
-import Link from "next/link";
+import LoginForm from "./login-form";
 
 export default function LoginPage() {
   return (
@@ -39,33 +30,7 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent>
-            <FieldGroup>
-              <Field>
-                <FieldLabel>ID</FieldLabel>
-                <Input />
-              </Field>
-              <Field>
-                <div className="flex items-center">
-                  <FieldLabel>Password</FieldLabel>
-                  <Link
-                    href={"#"}
-                    className="text-xs inline-block ml-auto hover:underline text-primary"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
-                <InputGroup>
-                  <InputGroupInput></InputGroupInput>
-                  <InputGroupAddon align={"inline-end"}>
-                    <Eye />
-                  </InputGroupAddon>
-                </InputGroup>
-              </Field>
-
-              <Field>
-                <Button>Login</Button>
-              </Field>
-            </FieldGroup>
+            <LoginForm />
           </CardContent>
         </Card>
       </div>
