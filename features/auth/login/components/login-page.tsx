@@ -9,6 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Eye } from "lucide-react";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
@@ -21,7 +28,9 @@ export default function LoginPage() {
           <span className="text-sm">Sekolah Gunadarma Cendekia</span>
         </div>
       </div>
-        <Card className="relative z-20 shadow-xl/70 m-8 rounded-xl">
+
+      <div className="flex items-center justify-center">
+        <Card className="relative z-20 shadow-xl/70 m-8 rounded-xl w-full max-w-md">
           <CardHeader>
             <CardTitle>Masuk ke Akun Anda</CardTitle>
             <CardDescription>
@@ -36,8 +45,21 @@ export default function LoginPage() {
                 <Input />
               </Field>
               <Field>
-                <FieldLabel>Password</FieldLabel>
-                <Input />
+                <div className="flex items-center">
+                  <FieldLabel>Password</FieldLabel>
+                  <Link
+                    href={"#"}
+                    className="text-xs inline-block ml-auto hover:underline text-primary"
+                  >
+                    Forgot your password?
+                  </Link>
+                </div>
+                <InputGroup>
+                  <InputGroupInput></InputGroupInput>
+                  <InputGroupAddon align={"inline-end"}>
+                    <Eye />
+                  </InputGroupAddon>
+                </InputGroup>
               </Field>
 
               <Field>
@@ -46,6 +68,7 @@ export default function LoginPage() {
             </FieldGroup>
           </CardContent>
         </Card>
+      </div>
     </AuroraBackground>
   );
 }
