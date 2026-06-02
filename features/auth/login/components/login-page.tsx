@@ -21,8 +21,7 @@ export default function LoginPage() {
           <span className="text-sm">Sekolah Gunadarma Cendekia</span>
         </div>
       </div>
-      <div className="relative z-20 h-[calc(100vh-4rem)] bg-white m-8 p-8 shadow-xl/70 rounded-xl">
-        <Card className="">
+        <Card className="relative z-20 shadow-xl/70 m-8 rounded-xl">
           <CardHeader>
             <CardTitle>Masuk ke Akun Anda</CardTitle>
             <CardDescription>
@@ -47,7 +46,6 @@ export default function LoginPage() {
             </FieldGroup>
           </CardContent>
         </Card>
-      </div>
     </AuroraBackground>
   );
 }
