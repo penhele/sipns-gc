@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   InputGroup,
-  InputGroupInput,
-  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput
 } from "@/components/ui/input-group";
 import { ROUTE } from "@/constants/route";
 import { Eye } from "lucide-react";
@@ -34,9 +34,9 @@ export default function LoginForm() {
         </div>
         <InputGroup>
           <InputGroupInput></InputGroupInput>
-          <InputGroupAddon align={"inline-end"}>
+          <InputGroupButton>
             <Eye />
-          </InputGroupAddon>
+          </InputGroupButton>
         </InputGroup>
       </Field>
 
