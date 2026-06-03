@@ -1,48 +1,61 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
-  InputGroup,
-  InputGroupButton,
-  InputGroupInput
-} from "@/components/ui/input-group";
-import { ROUTE } from "@/constants/route";
-import { Eye } from "lucide-react";
-import Link from "next/link";
+import { Field, FieldGroup } from "@/components/ui/field";
+import { ROUTES } from "@/constants/route";
+import { useAppForm } from "@/hooks/use-app-form";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { login } from "../../api/login";
+import { Login } from "../types/login";
 
 export default function LoginForm() {
   const router = useRouter();
 
+  const { mutateAsync } = useMutation({
+    mutationFn: (data: Login) => login(data),
+    onSuccess() {
+      toast.success("Berhasil login");
+      router.push(ROUTES.HOME);
+    },
+    onError(error: any) {
+      toast.error("Gagal login");
+      console.log(error.response.data);
+    },
+  });
+
+  const form = useAppForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async ({ value }) => {
+      await mutateAsync(value);
+    },
+  });
+
   return (
     <FieldGroup>
-      <Field>
-        <FieldLabel>ID</FieldLabel>
-        <Input />
-      </Field>
-      <Field>
-        <div className="flex items-center">
-          <FieldLabel>Password</FieldLabel>
-          <Link
-            href={"#"}
-            className="text-xs inline-block ml-auto hover:underline text-primary"
-          >
-            Forgot your password?
-          </Link>
-        </div>
-        <InputGroup>
-          <InputGroupInput></InputGroupInput>
-          <InputGroupButton>
-            <Eye />
-          </InputGroupButton>
-        </InputGroup>
-      </Field>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          form.handleSubmit();
+        }}
+        className="space-y-2"
+      >
+        <form.AppField name={"email"}>
+          {(field) => <field.TextField label="Email" />}
+        </form.AppField>
 
-      <Field>
-        <Button onClick={() => router.push(ROUTE.HOME)}>Login</Button>
-      </Field>
+        <form.AppField name={"password"}>
+          {(field) => <field.TextField label="Password" type="password" />}
+        </form.AppField>
+
+        <Field>
+          <Button>Login</Button>
+        </Field>
+      </form>
     </FieldGroup>
   );
 }
