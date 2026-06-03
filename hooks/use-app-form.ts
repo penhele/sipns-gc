@@ -1,3 +1,4 @@
+import ComboboxField from "@/components/combobox-field";
 import TextField from "@/components/text-field";
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
 
@@ -9,6 +10,7 @@ export const { useAppForm } = createFormHook({
   formContext,
   fieldComponents: {
     TextField,
+    ComboboxField,
   },
   formComponents: {},
 });

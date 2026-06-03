@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import useStudents from "@/features/student/hooks/use-students";
 import { useAppForm } from "@/hooks/use-app-form";
 
 export default function CreateScoreForm() {
@@ -14,6 +15,8 @@ export default function CreateScoreForm() {
     },
   });
 
+  const { data } = useStudents();
+
   return (
     <form.AppForm>
       <form action="" className="space-y-4">
@@ -26,7 +29,11 @@ export default function CreateScoreForm() {
 
           <form.AppField name="studentId">
             {(field) => (
-              <field.TextField label="ID Siswa" className="col-span-2" />
+              <field.ComboboxField
+                label="ID Siswa"
+                className="col-span-2"
+                items={data }
+              />
             )}
           </form.AppField>
 
