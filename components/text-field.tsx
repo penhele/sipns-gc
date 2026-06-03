@@ -13,9 +13,17 @@ type Props = {
   label: string;
   type?: "password" | "number";
   className?: string;
+  readonly?: boolean;
+  placeholder?: string;
 };
 
-export default function TextField({ label, type, className }: Props) {
+export default function TextField({
+  label,
+  type,
+  className,
+  readonly,
+  placeholder,
+}: Props) {
   const field = useFieldContext<string>();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +39,8 @@ export default function TextField({ label, type, className }: Props) {
             field.handleChange(e.target.value);
           }}
           onBlur={field.handleBlur}
+          readOnly={readonly}
+          placeholder={placeholder}
         />
 
         {type === "password" && (
