@@ -10,9 +10,9 @@ export default function PublicLayput({
     <SidebarProvider>
       <AppSidebar />
 
-      <main>
+      <main className="w-full">
         <SidebarTrigger />
-        {children}
+        <div className="p-4">{children}</div>
       </main>
     </SidebarProvider>
   );

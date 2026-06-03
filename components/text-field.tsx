@@ -7,19 +7,21 @@ import {
   InputGroupInput,
 } from "./ui/input-group";
 import { useFieldContext } from "@/hooks/use-app-form";
+import { cn } from "@/lib/utils";
 
 type Props = {
   label: string;
-  type?: "password";
+  type?: "password" | "number";
+  className?: string;
 };
 
-export default function TextField({ label, type }: Props) {
+export default function TextField({ label, type, className }: Props) {
   const field = useFieldContext<string>();
 
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Field>
+    <Field className={cn(className)}>
       <FieldLabel>{label}</FieldLabel>
       <InputGroup>
         <InputGroupInput
