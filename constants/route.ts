@@ -3,4 +3,5 @@ export const ROUTES = {
   LOGIN: "/login",
 
   HOME: "/",
+  CREATE_NILAI: "/nilai/create",
 } as const;
