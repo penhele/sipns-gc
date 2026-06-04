@@ -2,6 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useMe from "@/features/auth/hooks/use-me";
+import useStudents from "@/features/student/hooks/use-students";
+import useTeachers from "@/features/teacher/hooks/use-teachers";
 import { Users, GraduationCap, Award, BookOpen } from "lucide-react";
 
 const mockStudents = [
@@ -49,14 +51,19 @@ const mockStudents = [
 
 
 export default function HomePage() {
-  const totalGuru = 42;
-  const totalSiswa = 1250;
 
-  const { data } = useMe();
+  const { data: me } = useMe();
+  const { data: teachers } = useTeachers()
+  const { data: students } = useStudents()
+
+  const totalGuru = teachers?.length ?? 0;
+  const totalSiswa = students?.length ?? 0;
+
+  console.log(me)
 
   return (
     <div className="flex flex-col space-y-4">
-      <h1 className="text-2xl font-bold">Hi, {data?.role}</h1>
+      <h1 className="text-2xl font-bold">Hi, {me?.email} </h1>
 
       <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
