@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import useMe from "@/features/auth/hooks/use-me";
 import useStudents from "@/features/student/hooks/use-students";
 import { useAppForm } from "@/hooks/use-app-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createScore } from "../api/create-score";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/constants/route";
+import { getScoresQueryOptions } from "../queries/score-queries";
 
 export default function CreateScoreForm() {
   const router = useRouter();
@@ -16,16 +17,21 @@ export default function CreateScoreForm() {
   const { data } = useStudents();
   const { data: me } = useMe();
 
+  const queryClient = useQueryClient()
+
   const { mutateAsync } = useMutation({
     mutationFn: createScore,
     onSuccess(data, variables, onMutateResult, context) {
       toast.success("Berhasil menambahkan nilai");
-      router.push(ROUTES.HOME)
+      router.push(ROUTES.NILAI)
+      queryClient.invalidateQueries({ queryKey: getScoresQueryOptions().queryKey })
     },
     onError(error, variables, onMutateResult, context) {
       toast.error("Gagal menambahkan score");
     },
   });
+
+  console.log(me)
 
   const form = useAppForm({
     defaultValues: {
