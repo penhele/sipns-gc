@@ -44,11 +44,15 @@ export default function TextField({
           type={showPassword ? "text" : type}
           value={field.state.value}
           onChange={(e) => {
+            if (e.target.value === "") {
+              field.handleChange("" as any);
+              return;
+            }
             let newValue =
               type === "number" ? Number(e.target.value) : e.target.value;
             
             // Enforce and clamp min/max range for number inputs
-            if (type === "number" && typeof newValue === "number") {
+            if (type === "number" && typeof newValue === "number" && !isNaN(newValue)) {
               if (min !== undefined && newValue < min) newValue = min;
               if (max !== undefined && newValue > max) newValue = max;
             }
