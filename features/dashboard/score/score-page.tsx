@@ -6,10 +6,14 @@ import { PlusCircle, Sparkles, BookText, Award, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useScores from "./hooks/use-scores";
 import { Score } from "./types/score";
+import useMe from "@/features/auth/hooks/use-me";
 
 export default function ScorePage() {
-    const { data, isLoading } = useScores()
-    
+    const { data: me, isLoading: isLoadingMe } = useMe()
+    const { data, isLoading: isLoadingScores } = useScores(me?.teacher?.subjectId)
+
+    const isLoading = isLoadingMe || isLoadingScores
+
     // Safety check since getScores return type was Promise<Score> but logically should be Score[]
     const scores: Score[] = Array.isArray(data) ? data : (data ? [data] as unknown as Score[] : []);
 
@@ -97,6 +101,7 @@ export default function ScorePage() {
                                     <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                         <th className="h-12 px-6 text-left align-middle font-semibold text-muted-foreground">Nama Siswa</th>
                                         <th className="h-12 px-6 text-left align-middle font-semibold text-muted-foreground">NISN</th>
+                                        <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Mata Pelajaran</th>
                                         <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai Tugas</th>
                                         <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai UTS</th>
                                         <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai UAS</th>
@@ -113,15 +118,16 @@ export default function ScorePage() {
                                             <td className="p-6 align-middle text-muted-foreground font-mono text-xs">
                                                 {score.student?.nisn || '-'}
                                             </td>
+                                            <td className="p-6 align-middle text-center">{score.subject?.name}</td>
                                             <td className="p-6 align-middle text-center">{score.nilaiTugas}</td>
                                             <td className="p-6 align-middle text-center">{score.nilaiUts}</td>
                                             <td className="p-6 align-middle text-center">{score.nilaiUas}</td>
                                             <td className="p-6 align-middle text-center font-bold text-primary">{score.nilaiAkhir}</td>
                                             <td className="p-6 align-middle text-center">
                                                 <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-colors
-                                                ${score.statusKelulusan 
-                                                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400' 
-                                                    : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400'}`}>
+                                                ${score.statusKelulusan
+                                                        ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400'
+                                                        : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400'}`}>
                                                     {score.statusKelulusan ? (
                                                         <>
                                                             <Award className="h-3 w-3" />

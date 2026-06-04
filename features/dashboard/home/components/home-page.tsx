@@ -4,60 +4,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useMe from "@/features/auth/hooks/use-me";
 import useStudents from "@/features/student/hooks/use-students";
 import useTeachers from "@/features/teacher/hooks/use-teachers";
-import { Users, GraduationCap, Award, BookOpen } from "lucide-react";
-
-const mockStudents = [
-  {
-    id: 1,
-    name: "Budi Santoso",
-    nisn: "0012345678",
-    tugas: 85,
-    uts: 80,
-    uas: 88,
-    akhir: 84.3,
-    status: "Lulus",
-  },
-  {
-    id: 2,
-    name: "Siti Aminah",
-    nisn: "0012345679",
-    tugas: 90,
-    uts: 85,
-    uas: 92,
-    akhir: 89.0,
-    status: "Lulus",
-  },
-  {
-    id: 3,
-    name: "Ahmad Dahlan",
-    nisn: "0012345680",
-    tugas: 60,
-    uts: 55,
-    uas: 65,
-    akhir: 60.0,
-    status: "Tidak Lulus",
-  },
-  {
-    id: 4,
-    name: "Dewi Lestari",
-    nisn: "0012345681",
-    tugas: 75,
-    uts: 70,
-    uas: 80,
-    akhir: 75.0,
-    status: "Lulus",
-  },
-];
-
+import useScores from "@/features/dashboard/score/hooks/use-scores";
+import { Score } from "@/features/dashboard/score/types/score";
+import { Users, GraduationCap, Award, BookOpen, Loader2 } from "lucide-react";
 
 export default function HomePage() {
 
   const { data: me } = useMe();
   const { data: teachers } = useTeachers()
   const { data: students } = useStudents()
+  const { data: scoresData, isLoading: isLoadingScores } = useScores()
 
   const totalGuru = teachers?.length ?? 0;
   const totalSiswa = students?.length ?? 0;
+
+  const scores: Score[] = Array.isArray(scoresData) ? scoresData : (scoresData ? [scoresData] as unknown as Score[] : []);
 
   console.log(me)
 
@@ -102,42 +63,59 @@ export default function HomePage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="relative w-full overflow-auto">
-              <table className="w-full caption-bottom text-sm">
-                <thead className="[&_tr]:border-b bg-muted/30">
-                  <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <th className="h-12 px-6 text-left align-middle font-semibold text-muted-foreground">Nama Siswa</th>
-                    <th className="h-12 px-6 text-left align-middle font-semibold text-muted-foreground">NISN</th>
-                    <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai Tugas</th>
-                    <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai UTS</th>
-                    <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai UAS</th>
-                    <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai Akhir</th>
-                    <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Status Kelulusan</th>
-                  </tr>
-                </thead>
-                <tbody className="[&_tr:last-child]:border-0">
-                  {mockStudents.map((student) => (
-                    <tr key={student.id} className="border-b border-border/50 transition-colors hover:bg-muted/40 data-[state=selected]:bg-muted group">
-                      <td className="p-6 align-middle font-medium group-hover:text-primary transition-colors">{student.name}</td>
-                      <td className="p-6 align-middle text-muted-foreground font-mono text-xs">{student.nisn}</td>
-                      <td className="p-6 align-middle text-center">{student.tugas}</td>
-                      <td className="p-6 align-middle text-center">{student.uts}</td>
-                      <td className="p-6 align-middle text-center">{student.uas}</td>
-                      <td className="p-6 align-middle text-center font-bold text-primary">{student.akhir}</td>
-                      <td className="p-6 align-middle text-center">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-colors
-                        ${student.status === 'Lulus'
-                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400'
-                            : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400'}`}>
-                          {student.status === 'Lulus' && <Award className="h-3 w-3" />}
-                          {student.status}
-                        </span>
-                      </td>
+            {isLoadingScores ? (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-3" />
+                <p className="text-sm text-muted-foreground">Memuat data akademik...</p>
+              </div>
+            ) : scores.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <p className="text-sm text-muted-foreground">Belum ada data nilai akademik.</p>
+              </div>
+            ) : (
+              <div className="relative w-full overflow-auto">
+                <table className="w-full caption-bottom text-sm">
+                  <thead className="[&_tr]:border-b bg-muted/30">
+                    <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                      <th className="h-12 px-6 text-left align-middle font-semibold text-muted-foreground">Nama Siswa</th>
+                      <th className="h-12 px-6 text-left align-middle font-semibold text-muted-foreground">NISN</th>
+                      <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Mata Pelajaran</th>
+                      <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai Tugas</th>
+                      <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai UTS</th>
+                      <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai UAS</th>
+                      <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Nilai Akhir</th>
+                      <th className="h-12 px-6 text-center align-middle font-semibold text-muted-foreground">Status Kelulusan</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="[&_tr:last-child]:border-0">
+                    {scores.map((score) => (
+                      <tr key={score.id} className="border-b border-border/50 transition-colors hover:bg-muted/40 data-[state=selected]:bg-muted group">
+                        <td className="p-6 align-middle font-medium group-hover:text-primary transition-colors">
+                          {score.student?.name || 'Unknown'}
+                        </td>
+                        <td className="p-6 align-middle text-muted-foreground font-mono text-xs">
+                          {score.student?.nisn || '-'}
+                        </td>
+                        <td className="p-6 align-middle text-center">{score.subject?.name || '-'}</td>
+                        <td className="p-6 align-middle text-center">{score.nilaiTugas}</td>
+                        <td className="p-6 align-middle text-center">{score.nilaiUts}</td>
+                        <td className="p-6 align-middle text-center">{score.nilaiUas}</td>
+                        <td className="p-6 align-middle text-center font-bold text-primary">{score.nilaiAkhir}</td>
+                        <td className="p-6 align-middle text-center">
+                          <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-colors
+                          ${score.statusKelulusan
+                              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400'
+                              : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-400'}`}>
+                            {score.statusKelulusan && <Award className="h-3 w-3" />}
+                            {score.statusKelulusan ? 'Lulus' : 'Tidak Lulus'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

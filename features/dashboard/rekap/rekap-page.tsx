@@ -5,9 +5,13 @@ import { ClipboardList, Award, AlertCircle, BarChart3, Users, Loader2 } from "lu
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useScores from "@/features/dashboard/score/hooks/use-scores";
 import { Score } from "@/features/dashboard/score/types/score";
+import useMe from "@/features/auth/hooks/use-me";
 
 export default function RekapPage() {
-    const { data, isLoading } = useScores()
+    const { data: me, isLoading: isLoadingMe } = useMe()
+    const { data, isLoading: isLoadingScores } = useScores(me?.teacher?.id)
+
+    const isLoading = isLoadingMe || isLoadingScores
     
     // Safety check
     const scores: Score[] = Array.isArray(data) ? data : (data ? [data] as unknown as Score[] : []);

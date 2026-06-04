@@ -24,7 +24,7 @@ export default function CreateScoreForm() {
     onSuccess(data, variables, onMutateResult, context) {
       toast.success("Berhasil menambahkan nilai");
       router.push(ROUTES.NILAI)
-      queryClient.invalidateQueries({ queryKey: getScoresQueryOptions().queryKey })
+      queryClient.invalidateQueries({ queryKey: ["scores"] })
     },
     onError(error, variables, onMutateResult, context) {
       toast.error("Gagal menambahkan score");
