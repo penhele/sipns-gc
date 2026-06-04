@@ -15,6 +15,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import HeroSection from "@/components/hero-section";
 
 export default function TeacherPage() {
   const { data: me, isLoading: isLoadingMe } = useMe();
@@ -45,40 +46,11 @@ export default function TeacherPage() {
   return (
     <div className="flex flex-col space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-indigo-500/20 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-8 text-white shadow-lg">
-        <div className="absolute top-0 right-0 -mr-12 -mt-12 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-12 -mb-12 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-md">
-                Dashboard Guru
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/30 px-3 py-1 text-xs font-semibold backdrop-blur-md text-emerald-200">
-                <BookOpen className="h-3 w-3" />
-                {subjectName}
-              </span>
-            </div>
-            <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Selamat Datang, {me?.teacher?.name || me?.email}
-            </h1>
-            <p className="mt-2 text-indigo-100 max-w-xl">
-              Kelola nilai akademik siswa Anda, pantau statistik kelulusan
-              kelas, dan perbarui hasil ujian di sini.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link href={ROUTES.CREATE_NILAI}>
-              <button className="flex items-center gap-2 px-6 py-3 font-semibold text-indigo-700 bg-white hover:bg-indigo-50 rounded-xl transition-all duration-300 shadow-md hover:scale-105">
-                <PlusCircle className="w-5 h-5 text-indigo-600" />
-                Input Nilai
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
+      <HeroSection
+        header="Selamat Datang, "
+        description="Kelola nilai akademik siswa Anda, pantau statistik kelulusan kelas, dan perbarui hasil ujian di sini."
+        color="purple"
+      />
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20">

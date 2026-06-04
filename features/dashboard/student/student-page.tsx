@@ -18,6 +18,7 @@ import {
 import { useState } from "react";
 import StatCard from "./components/stat-card";
 import TeacherCard from "./components/teacher-card";
+import HeroSection from "@/components/hero-section";
 
 export default function StudentPage() {
   const { data: me, isLoading: isLoadingMe } = useMe();
@@ -63,40 +64,12 @@ export default function StudentPage() {
   return (
     <div className="flex flex-col space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Welcome & Info Card */}
-      <div className="relative overflow-hidden rounded-3xl border border-sky-500/20 bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 p-8 text-white shadow-lg">
-        <div className="absolute top-0 right-0 -mr-12 -mt-12 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-12 -mb-12 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-md">
-                Dashboard Siswa
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-sky-400/30 px-3 py-1 text-xs font-semibold backdrop-blur-md text-sky-200">
-                <GraduationCap className="h-3 w-3" />
-                Kelas {me?.student?.class || "-"}
-              </span>
-            </div>
-            <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Halo, {me?.student?.name || me?.email}
-            </h1>
-            <p className="mt-2 text-sky-100 max-w-xl">
-              Pantau laporan perkembangan nilai akademik, daftar guru pengajar,
-              dan status kelulusan mata pelajaran Anda di semester ini.
-            </p>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-md border border-white/25 rounded-2xl p-5 flex flex-col gap-1 min-w-[200px] shadow-sm">
-            <span className="text-xs text-sky-200 uppercase tracking-wider font-semibold">
-              Nomor Induk Siswa (NISN)
-            </span>
-            <span className="text-2xl font-mono font-bold tracking-widest">
-              {me?.student?.nisn || "-"}
-            </span>
-          </div>
-        </div>
-      </div>
+      <HeroSection
+        header="Selamat Datang, "
+        description="Pantau laporan perkembangan nilai akademik, daftar guru pengajar,
+              dan status kelulusan mata pelajaran Anda di semester ini."
+        color="blue"
+      />
 
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20">

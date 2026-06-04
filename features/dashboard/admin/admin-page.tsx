@@ -39,6 +39,7 @@ import {
   X,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import HeroSection from "@/components/hero-section";
 
 type ActiveTab = "overview" | "teachers" | "students" | "subjects" | "scores";
 
@@ -362,32 +363,11 @@ export default function AdminPage() {
   return (
     <div className="flex flex-col space-y-8 animate-in fade-in duration-500">
       {/* Title Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-rose-500/20 bg-gradient-to-r from-rose-600 via-pink-600 to-red-600 p-8 text-white shadow-lg">
-        <div className="absolute top-0 right-0 -mr-12 -mt-12 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-12 -mb-12 h-48 w-48 rounded-full bg-white/10 blur-2xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-md">
-                Administrator
-              </span>
-            </div>
-            <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">
-              Panel Pengaturan SIPNS
-            </h1>
-            <p className="mt-2 text-rose-100 max-w-xl">
-              Kelola entitas pendidikan meliputi data guru, siswa, mata
-              pelajaran, serta semua hasil evaluasi nilai secara terpusat.
-            </p>
-          </div>
-
-          <div className="p-4 bg-white/15 backdrop-blur-md rounded-2xl border border-white/20 flex items-center gap-3">
-            <Shield className="w-6 h-6 animate-pulse" />
-            <span className="font-semibold text-sm">Akses Super Admin</span>
-          </div>
-        </div>
-      </div>
+      <HeroSection
+        header="Panel Pengaturan SIPNS"
+        description="Kelola entitas pendidikan meliputi data guru, siswa, mata pelajaran, serta semua hasil evaluasi nilai secara terpusat."
+        color="red"
+      />
 
       {/* Tabs Headers */}
       <div className="flex border-b border-border/60 overflow-x-auto gap-4 scrollbar-none">
