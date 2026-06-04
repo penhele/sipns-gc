@@ -1,4 +1,5 @@
 import { User } from "@/features/auth/types/user";
+import { Score } from "@/features/dashboard/score/types/score";
 
 export interface Student {
   id: string;
@@ -9,4 +10,5 @@ export interface Student {
   createdAt: Date;
   updatedAt: Date;
   user?: User;
+  scores: Score[];
 }
