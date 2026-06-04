@@ -1,6 +1,5 @@
 "use client"
 
-import { ROUTES } from "@/constants/route";
 import { ClipboardList, Award, AlertCircle, BarChart3, Users, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useScores from "@/features/dashboard/score/hooks/use-scores";

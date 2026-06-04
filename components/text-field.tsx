@@ -16,6 +16,8 @@ type Props = {
   className?: string;
   readonly?: boolean;
   placeholder?: string;
+  min?: number;
+  max?: number;
 };
 
 export default function TextField({
@@ -24,6 +26,8 @@ export default function TextField({
   className,
   readonly,
   placeholder,
+  min,
+  max,
 }: Props) {
   const field = useFieldContext<string>();
 
@@ -40,13 +44,22 @@ export default function TextField({
           type={showPassword ? "text" : type}
           value={field.state.value}
           onChange={(e) => {
-            const newValue =
+            let newValue =
               type === "number" ? Number(e.target.value) : e.target.value;
+            
+            // Enforce and clamp min/max range for number inputs
+            if (type === "number" && typeof newValue === "number") {
+              if (min !== undefined && newValue < min) newValue = min;
+              if (max !== undefined && newValue > max) newValue = max;
+            }
+            
             field.handleChange(newValue as any);
           }}
           onBlur={field.handleBlur}
           readOnly={readonly}
           placeholder={placeholder}
+          min={min}
+          max={max}
         />
 
         {type === "password" && (

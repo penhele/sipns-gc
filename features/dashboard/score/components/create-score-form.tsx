@@ -22,12 +22,12 @@ export default function CreateScoreForm() {
 
   const { mutateAsync } = useMutation({
     mutationFn: createScore,
-    onSuccess(data, variables, onMutateResult, context) {
+    onSuccess() {
       toast.success("Berhasil menambahkan nilai");
       router.push(ROUTES.NILAI);
       queryClient.invalidateQueries({ queryKey: ["scores"] });
     },
-    onError(error, variables, onMutateResult, context) {
+    onError() {
       toast.error("Gagal menambahkan score");
     },
   });

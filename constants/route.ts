@@ -3,7 +3,11 @@ export const ROUTES = {
   LOGIN: "/login",
 
   HOME: "/",
-  NILAI: '/nilai',
-  CREATE_NILAI: "/nilai/create",
-  REKAP: "/rekap",
+  NILAI: '/dashboard/teacher/nilai',
+  CREATE_NILAI: "/dashboard/teacher/nilai/create",
+  REKAP: "/dashboard/teacher/rekap",
+
+  STUDENT: '/dashboard/student',
+  TEACHER: '/dashboard/teacher',
+  ADMIN: '/dashboard/admin'
 } as const;
