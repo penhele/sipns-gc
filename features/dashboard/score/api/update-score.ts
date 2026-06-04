@@ -8,7 +8,10 @@ export interface UpdateScoreParams {
   nilaiUas?: number;
 }
 
-export const updateScore = async ({ id, ...data }: UpdateScoreParams): Promise<Score> => {
+export const updateScore = async ({
+  id,
+  ...data
+}: UpdateScoreParams): Promise<Score> => {
   const response = await api.patch(`/scores/${id}`, data);
   return response.data;
 };

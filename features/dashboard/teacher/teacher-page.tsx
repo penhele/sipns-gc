@@ -26,7 +26,7 @@ export default function TeacherPage() {
 
   const isLoading = isLoadingMe || isLoadingScores;
 
-const scores: Score[] = Array.isArray(scoresData)
+  const scores: Score[] = Array.isArray(scoresData)
     ? scoresData
     : scoresData
       ? ([scoresData] as unknown as Score[])

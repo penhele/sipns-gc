@@ -7,7 +7,10 @@ export interface UpdateTeacherParams {
   subjectId?: string;
 }
 
-export const updateTeacher = async ({ id, ...data }: UpdateTeacherParams): Promise<Teacher> => {
+export const updateTeacher = async ({
+  id,
+  ...data
+}: UpdateTeacherParams): Promise<Teacher> => {
   const response = await api.patch(`/teachers/${id}`, data);
   return response.data;
 };

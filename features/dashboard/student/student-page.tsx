@@ -1,26 +1,21 @@
 "use client";
 
+import LabelSection from "@/components/label-section";
 import useMe from "@/features/auth/hooks/use-me";
 import useScores from "@/features/dashboard/score/hooks/use-scores";
-import useTeachers from "@/features/teacher/hooks/use-teachers";
 import { Score } from "@/features/dashboard/score/types/score";
-import {
-  GraduationCap,
-  BookOpen,
-  Award,
-  TrendingUp,
-  AlertCircle,
-  Loader2,
-  Users,
-  Search,
-  BookMarked,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
 import StudentTable from "@/features/student/components/student-table";
-import useStudents from "@/features/student/hooks/use-students";
-import useStudent from "@/features/student/hooks/use-student";
-import LabelSection from "@/components/label-section";
+import useTeachers from "@/features/teacher/hooks/use-teachers";
+import {
+  Award,
+  BookMarked,
+  BookOpen,
+  GraduationCap,
+  Loader2,
+  TrendingUp,
+  Users,
+} from "lucide-react";
+import { useState } from "react";
 import StatCard from "./components/stat-card";
 import TeacherCard from "./components/teacher-card";
 

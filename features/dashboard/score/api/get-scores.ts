@@ -1,10 +1,10 @@
-import { api } from "@/lib/api/axios"
-import { Score } from "../types/score"
+import { api } from "@/lib/api/axios";
+import { Score } from "../types/score";
 
 export const getScores = async (teacherId?: string): Promise<Score[]> => {
-    const response = await api.get('/scores', {
-        params: teacherId ? { teacherId } : undefined
-    })
+  const response = await api.get("/scores", {
+    params: teacherId ? { teacherId } : undefined,
+  });
 
-    return response.data
-}
+  return response.data;
+};

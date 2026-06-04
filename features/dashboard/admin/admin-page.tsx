@@ -23,20 +23,20 @@ import { deleteScore } from "@/features/dashboard/score/api/delete-score";
 
 import { Score } from "@/features/dashboard/score/types/score";
 
-import { 
-  Shield, 
-  Users, 
-  GraduationCap, 
-  BookOpen, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Loader2, 
-  Search, 
-  Award, 
-  TrendingUp, 
-  BookText, 
-  X 
+import {
+  Shield,
+  Users,
+  GraduationCap,
+  BookOpen,
+  Plus,
+  Edit,
+  Trash2,
+  Loader2,
+  Search,
+  Award,
+  TrendingUp,
+  BookText,
+  X,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -55,14 +55,22 @@ export default function AdminPage() {
   const teachers = Array.isArray(teachersData) ? teachersData : [];
   const students = Array.isArray(studentsData) ? studentsData : [];
   const subjects = Array.isArray(subjectsData) ? subjectsData : [];
-  const scores = Array.isArray(scoresData) ? scoresData : (scoresData ? [scoresData] as unknown as Score[] : []);
+  const scores = Array.isArray(scoresData)
+    ? scoresData
+    : scoresData
+      ? ([scoresData] as unknown as Score[])
+      : [];
 
   // Search terms
   const [searchQuery, setSearchQuery] = useState("");
 
   // Modals & Forms states
-  const [modalType, setModalType] = useState<"add" | "edit" | "delete" | null>(null);
-  const [targetType, setTargetType] = useState<"teacher" | "student" | "subject" | "score" | null>(null);
+  const [modalType, setModalType] = useState<"add" | "edit" | "delete" | null>(
+    null,
+  );
+  const [targetType, setTargetType] = useState<
+    "teacher" | "student" | "subject" | "score" | null
+  >(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
@@ -104,7 +112,10 @@ export default function AdminPage() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const openEditModal = (type: "teacher" | "student" | "subject" | "score", item: any) => {
+  const openEditModal = (
+    type: "teacher" | "student" | "subject" | "score",
+    item: any,
+  ) => {
     resetForm();
     setSelectedItem(item);
     setTargetType(type);
@@ -127,7 +138,10 @@ export default function AdminPage() {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const openDeleteConfirm = (type: "teacher" | "student" | "subject" | "score", item: any) => {
+  const openDeleteConfirm = (
+    type: "teacher" | "student" | "subject" | "score",
+    item: any,
+  ) => {
     setSelectedItem(item);
     setTargetType(type);
     setModalType("delete");
@@ -311,28 +325,38 @@ export default function AdminPage() {
     }
   };
 
-  const isLoading = loadingTeachers || loadingStudents || loadingSubjects || loadingScores;
+  const isLoading =
+    loadingTeachers || loadingStudents || loadingSubjects || loadingScores;
 
   // Filter calculations
-  const filteredTeachers = teachers.filter((t) =>
-    t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (t.subject?.name || "").toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredTeachers = teachers.filter(
+    (t) =>
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (t.subject?.name || "").toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const filteredStudents = students.filter((s) =>
-    s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.nisn.includes(searchQuery) ||
-    s.class.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredStudents = students.filter(
+    (s) =>
+      s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      s.nisn.includes(searchQuery) ||
+      s.class.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const filteredSubjects = subjects.filter((sb) =>
-    sb.name.toLowerCase().includes(searchQuery.toLowerCase())
+    sb.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  const filteredScores = scores.filter((sc) =>
-    (sc.student?.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (sc.subject?.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (sc.teacher?.name || "").toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredScores = scores.filter(
+    (sc) =>
+      (sc.student?.name || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      (sc.subject?.name || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      (sc.teacher?.name || "")
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -353,7 +377,8 @@ export default function AdminPage() {
               Panel Pengaturan SIPNS
             </h1>
             <p className="mt-2 text-rose-100 max-w-xl">
-              Kelola entitas pendidikan meliputi data guru, siswa, mata pelajaran, serta semua hasil evaluasi nilai secara terpusat.
+              Kelola entitas pendidikan meliputi data guru, siswa, mata
+              pelajaran, serta semua hasil evaluasi nilai secara terpusat.
             </p>
           </div>
 
@@ -367,7 +392,10 @@ export default function AdminPage() {
       {/* Tabs Headers */}
       <div className="flex border-b border-border/60 overflow-x-auto gap-4 scrollbar-none">
         <button
-          onClick={() => { setActiveTab("overview"); setSearchQuery(""); }}
+          onClick={() => {
+            setActiveTab("overview");
+            setSearchQuery("");
+          }}
           className={`pb-4 px-2 font-semibold text-sm transition-all border-b-2 whitespace-nowrap ${
             activeTab === "overview"
               ? "border-rose-500 text-rose-600 dark:text-rose-400"
@@ -377,7 +405,10 @@ export default function AdminPage() {
           Ringkasan
         </button>
         <button
-          onClick={() => { setActiveTab("teachers"); setSearchQuery(""); }}
+          onClick={() => {
+            setActiveTab("teachers");
+            setSearchQuery("");
+          }}
           className={`pb-4 px-2 font-semibold text-sm transition-all border-b-2 whitespace-nowrap ${
             activeTab === "teachers"
               ? "border-rose-500 text-rose-600 dark:text-rose-400"
@@ -387,7 +418,10 @@ export default function AdminPage() {
           Kelola Guru
         </button>
         <button
-          onClick={() => { setActiveTab("students"); setSearchQuery(""); }}
+          onClick={() => {
+            setActiveTab("students");
+            setSearchQuery("");
+          }}
           className={`pb-4 px-2 font-semibold text-sm transition-all border-b-2 whitespace-nowrap ${
             activeTab === "students"
               ? "border-rose-500 text-rose-600 dark:text-rose-400"
@@ -397,7 +431,10 @@ export default function AdminPage() {
           Kelola Siswa
         </button>
         <button
-          onClick={() => { setActiveTab("subjects"); setSearchQuery(""); }}
+          onClick={() => {
+            setActiveTab("subjects");
+            setSearchQuery("");
+          }}
           className={`pb-4 px-2 font-semibold text-sm transition-all border-b-2 whitespace-nowrap ${
             activeTab === "subjects"
               ? "border-rose-500 text-rose-600 dark:text-rose-400"
@@ -407,7 +444,10 @@ export default function AdminPage() {
           Kelola Mapel
         </button>
         <button
-          onClick={() => { setActiveTab("scores"); setSearchQuery(""); }}
+          onClick={() => {
+            setActiveTab("scores");
+            setSearchQuery("");
+          }}
           className={`pb-4 px-2 font-semibold text-sm transition-all border-b-2 whitespace-nowrap ${
             activeTab === "scores"
               ? "border-rose-500 text-rose-600 dark:text-rose-400"
@@ -421,7 +461,9 @@ export default function AdminPage() {
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20">
           <Loader2 className="w-10 h-10 text-rose-500 animate-spin mb-4" />
-          <p className="text-muted-foreground text-sm font-medium">Memuat data panel admin...</p>
+          <p className="text-muted-foreground text-sm font-medium">
+            Memuat data panel admin...
+          </p>
         </div>
       ) : (
         <div className="space-y-6">
@@ -431,45 +473,61 @@ export default function AdminPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Card className="bg-gradient-to-br from-rose-500/10 to-rose-600/5 border-rose-200/50 dark:border-rose-800/50">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-rose-700 dark:text-rose-400">Total Guru</CardTitle>
+                    <CardTitle className="text-sm font-medium text-rose-700 dark:text-rose-400">
+                      Total Guru
+                    </CardTitle>
                     <Users className="h-4 w-4 text-rose-600 dark:text-rose-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{teachers.length}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Tenaga pendidik aktif</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Tenaga pendidik aktif
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gradient-to-br from-pink-500/10 to-pink-600/5 border-pink-200/50 dark:border-pink-800/50">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-pink-700 dark:text-pink-400">Total Siswa</CardTitle>
+                    <CardTitle className="text-sm font-medium text-pink-700 dark:text-pink-400">
+                      Total Siswa
+                    </CardTitle>
                     <GraduationCap className="h-4 w-4 text-pink-600 dark:text-pink-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{students.length}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Siswa aktif terdaftar</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Siswa aktif terdaftar
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border-indigo-200/50 dark:border-indigo-800/50">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-indigo-700 dark:text-indigo-400">Mata Pelajaran</CardTitle>
+                    <CardTitle className="text-sm font-medium text-indigo-700 dark:text-indigo-400">
+                      Mata Pelajaran
+                    </CardTitle>
                     <BookOpen className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{subjects.length}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Kurikulum pengajaran</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Kurikulum pengajaran
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-200/50 dark:border-purple-800/50">
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-400">Total Penilaian</CardTitle>
+                    <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-400">
+                      Total Penilaian
+                    </CardTitle>
                     <BookText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-3xl font-bold">{scores.length}</div>
-                    <p className="text-xs text-muted-foreground mt-1">Nilai terdata di database</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Nilai terdata di database
+                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -485,14 +543,22 @@ export default function AdminPage() {
                   </CardHeader>
                   <CardContent className="pt-6 flex flex-col justify-center items-center text-center space-y-4">
                     <div className="text-5xl font-extrabold text-rose-600">
-                      {scores.length > 0 
-                        ? ((scores.filter(s => s.statusKelulusan).length / scores.length) * 100).toFixed(0)
-                        : "0"}%
+                      {scores.length > 0
+                        ? (
+                            (scores.filter((s) => s.statusKelulusan).length /
+                              scores.length) *
+                            100
+                          ).toFixed(0)
+                        : "0"}
+                      %
                     </div>
                     <div>
-                      <p className="font-semibold text-sm text-foreground">Rasio Kelulusan Global</p>
+                      <p className="font-semibold text-sm text-foreground">
+                        Rasio Kelulusan Global
+                      </p>
                       <p className="text-xs text-muted-foreground mt-1 max-w-xs">
-                        Presentase siswa yang memperoleh nilai akhir evaluasi minimal 75 di semua mata pelajaran.
+                        Presentase siswa yang memperoleh nilai akhir evaluasi
+                        minimal 75 di semua mata pelajaran.
                       </p>
                     </div>
                   </CardContent>
@@ -507,7 +573,9 @@ export default function AdminPage() {
                   </CardHeader>
                   <CardContent className="p-0">
                     {scores.length === 0 ? (
-                      <div className="py-12 text-center text-sm text-muted-foreground">Belum ada data nilai</div>
+                      <div className="py-12 text-center text-sm text-muted-foreground">
+                        Belum ada data nilai
+                      </div>
                     ) : (
                       <div className="overflow-x-auto">
                         <table className="w-full text-sm">
@@ -515,17 +583,28 @@ export default function AdminPage() {
                             <tr className="border-b bg-muted/20 text-xs">
                               <th className="px-4 py-3 text-left">Siswa</th>
                               <th className="px-4 py-3 text-left">Mapel</th>
-                              <th className="px-4 py-3 text-center">Nilai Akhir</th>
+                              <th className="px-4 py-3 text-center">
+                                Nilai Akhir
+                              </th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-border/20">
-                            {[...scores].sort((a, b) => b.nilaiAkhir - a.nilaiAkhir).slice(0, 3).map((score) => (
-                              <tr key={score.id} className="hover:bg-muted/5">
-                                <td className="px-4 py-3 font-medium text-foreground">{score.student?.name}</td>
-                                <td className="px-4 py-3 text-muted-foreground">{score.subject?.name}</td>
-                                <td className="px-4 py-3 text-center font-bold text-rose-600">{score.nilaiAkhir}</td>
-                              </tr>
-                            ))}
+                            {[...scores]
+                              .sort((a, b) => b.nilaiAkhir - a.nilaiAkhir)
+                              .slice(0, 3)
+                              .map((score) => (
+                                <tr key={score.id} className="hover:bg-muted/5">
+                                  <td className="px-4 py-3 font-medium text-foreground">
+                                    {score.student?.name}
+                                  </td>
+                                  <td className="px-4 py-3 text-muted-foreground">
+                                    {score.subject?.name}
+                                  </td>
+                                  <td className="px-4 py-3 text-center font-bold text-rose-600">
+                                    {score.nilaiAkhir}
+                                  </td>
+                                </tr>
+                              ))}
                           </tbody>
                         </table>
                       </div>
@@ -565,31 +644,53 @@ export default function AdminPage() {
                     <table className="w-full text-sm">
                       <thead className="bg-muted/30 border-b">
                         <tr>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Nama Lengkap</th>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Mata Pelajaran</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Aksi</th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Nama Lengkap
+                          </th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Mata Pelajaran
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Aksi
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border/30">
                         {filteredTeachers.length === 0 ? (
                           <tr>
-                            <td colSpan={3} className="text-center py-10 text-muted-foreground">Tidak ada data guru ditemukan</td>
+                            <td
+                              colSpan={3}
+                              className="text-center py-10 text-muted-foreground"
+                            >
+                              Tidak ada data guru ditemukan
+                            </td>
                           </tr>
                         ) : (
                           filteredTeachers.map((teacher) => (
-                            <tr key={teacher.id} className="hover:bg-muted/10 transition-colors">
-                              <td className="px-6 py-4 font-medium text-foreground">{teacher.name}</td>
-                              <td className="px-6 py-4 text-muted-foreground">{teacher.subject?.name || "Umum"}</td>
+                            <tr
+                              key={teacher.id}
+                              className="hover:bg-muted/10 transition-colors"
+                            >
+                              <td className="px-6 py-4 font-medium text-foreground">
+                                {teacher.name}
+                              </td>
+                              <td className="px-6 py-4 text-muted-foreground">
+                                {teacher.subject?.name || "Umum"}
+                              </td>
                               <td className="px-6 py-4 text-center flex items-center justify-center gap-2">
                                 <button
-                                  onClick={() => openEditModal("teacher", teacher)}
+                                  onClick={() =>
+                                    openEditModal("teacher", teacher)
+                                  }
                                   className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 rounded-lg transition-all"
                                   title="Edit"
                                 >
                                   <Edit className="w-4 h-4" />
                                 </button>
                                 <button
-                                  onClick={() => openDeleteConfirm("teacher", teacher)}
+                                  onClick={() =>
+                                    openDeleteConfirm("teacher", teacher)
+                                  }
                                   className="p-2 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-lg transition-all"
                                   title="Hapus"
                                 >
@@ -636,32 +737,58 @@ export default function AdminPage() {
                     <table className="w-full text-sm">
                       <thead className="bg-muted/30 border-b">
                         <tr>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Nama Siswa</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">NISN</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Kelas</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Aksi</th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Nama Siswa
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            NISN
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Kelas
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Aksi
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border/30">
                         {filteredStudents.length === 0 ? (
                           <tr>
-                            <td colSpan={4} className="text-center py-10 text-muted-foreground">Tidak ada data siswa ditemukan</td>
+                            <td
+                              colSpan={4}
+                              className="text-center py-10 text-muted-foreground"
+                            >
+                              Tidak ada data siswa ditemukan
+                            </td>
                           </tr>
                         ) : (
                           filteredStudents.map((student) => (
-                            <tr key={student.id} className="hover:bg-muted/10 transition-colors">
-                              <td className="px-6 py-4 font-medium text-foreground">{student.name}</td>
-                              <td className="px-6 py-4 text-center font-mono text-xs text-muted-foreground">{student.nisn}</td>
-                              <td className="px-6 py-4 text-center text-muted-foreground">{student.class}</td>
+                            <tr
+                              key={student.id}
+                              className="hover:bg-muted/10 transition-colors"
+                            >
+                              <td className="px-6 py-4 font-medium text-foreground">
+                                {student.name}
+                              </td>
+                              <td className="px-6 py-4 text-center font-mono text-xs text-muted-foreground">
+                                {student.nisn}
+                              </td>
+                              <td className="px-6 py-4 text-center text-muted-foreground">
+                                {student.class}
+                              </td>
                               <td className="px-6 py-4 text-center flex items-center justify-center gap-2">
                                 <button
-                                  onClick={() => openEditModal("student", student)}
+                                  onClick={() =>
+                                    openEditModal("student", student)
+                                  }
                                   className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 rounded-lg transition-all"
                                 >
                                   <Edit className="w-4 h-4" />
                                 </button>
                                 <button
-                                  onClick={() => openDeleteConfirm("student", student)}
+                                  onClick={() =>
+                                    openDeleteConfirm("student", student)
+                                  }
                                   className="p-2 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-lg transition-all"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -707,28 +834,46 @@ export default function AdminPage() {
                     <table className="w-full text-sm">
                       <thead className="bg-muted/30 border-b">
                         <tr>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Nama Mata Pelajaran</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Aksi</th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Nama Mata Pelajaran
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Aksi
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border/30">
                         {filteredSubjects.length === 0 ? (
                           <tr>
-                            <td colSpan={2} className="text-center py-10 text-muted-foreground">Tidak ada data mapel ditemukan</td>
+                            <td
+                              colSpan={2}
+                              className="text-center py-10 text-muted-foreground"
+                            >
+                              Tidak ada data mapel ditemukan
+                            </td>
                           </tr>
                         ) : (
                           filteredSubjects.map((subject) => (
-                            <tr key={subject.id} className="hover:bg-muted/10 transition-colors">
-                              <td className="px-6 py-4 font-medium text-foreground">{subject.name}</td>
+                            <tr
+                              key={subject.id}
+                              className="hover:bg-muted/10 transition-colors"
+                            >
+                              <td className="px-6 py-4 font-medium text-foreground">
+                                {subject.name}
+                              </td>
                               <td className="px-6 py-4 text-center flex items-center justify-center gap-2">
                                 <button
-                                  onClick={() => openEditModal("subject", subject)}
+                                  onClick={() =>
+                                    openEditModal("subject", subject)
+                                  }
                                   className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 rounded-lg transition-all"
                                 >
                                   <Edit className="w-4 h-4" />
                                 </button>
                                 <button
-                                  onClick={() => openDeleteConfirm("subject", subject)}
+                                  onClick={() =>
+                                    openDeleteConfirm("subject", subject)
+                                  }
                                   className="p-2 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-lg transition-all"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -767,35 +912,71 @@ export default function AdminPage() {
                     <table className="w-full text-sm">
                       <thead className="bg-muted/30 border-b">
                         <tr>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Siswa</th>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Mata Pelajaran</th>
-                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">Guru</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Nilai Akhir</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Kelulusan</th>
-                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">Aksi</th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Siswa
+                          </th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Mata Pelajaran
+                          </th>
+                          <th className="px-6 py-4 text-left font-semibold text-muted-foreground">
+                            Guru
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Nilai Akhir
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Kelulusan
+                          </th>
+                          <th className="px-6 py-4 text-center font-semibold text-muted-foreground">
+                            Aksi
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border/30">
                         {filteredScores.length === 0 ? (
                           <tr>
-                            <td colSpan={6} className="text-center py-10 text-muted-foreground">Tidak ada data nilai ditemukan</td>
+                            <td
+                              colSpan={6}
+                              className="text-center py-10 text-muted-foreground"
+                            >
+                              Tidak ada data nilai ditemukan
+                            </td>
                           </tr>
                         ) : (
                           filteredScores.map((score) => (
-                            <tr key={score.id} className="hover:bg-muted/10 transition-colors">
+                            <tr
+                              key={score.id}
+                              className="hover:bg-muted/10 transition-colors"
+                            >
                               <td className="px-6 py-4">
-                                <div className="font-medium text-foreground">{score.student?.name}</div>
-                                <div className="text-xs text-muted-foreground">Kelas: {score.student?.class}</div>
+                                <div className="font-medium text-foreground">
+                                  {score.student?.name}
+                                </div>
+                                <div className="text-xs text-muted-foreground">
+                                  Kelas: {score.student?.class}
+                                </div>
                               </td>
-                              <td className="px-6 py-4 text-muted-foreground">{score.subject?.name}</td>
-                              <td className="px-6 py-4 text-muted-foreground">{score.teacher?.name}</td>
-                              <td className="px-6 py-4 text-center font-bold text-rose-600">{score.nilaiAkhir}</td>
+                              <td className="px-6 py-4 text-muted-foreground">
+                                {score.subject?.name}
+                              </td>
+                              <td className="px-6 py-4 text-muted-foreground">
+                                {score.teacher?.name}
+                              </td>
+                              <td className="px-6 py-4 text-center font-bold text-rose-600">
+                                {score.nilaiAkhir}
+                              </td>
                               <td className="px-6 py-4 text-center">
-                                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold
-                                  ${score.statusKelulusan 
-                                    ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400" 
-                                    : "bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-400"}`}>
-                                  {score.statusKelulusan ? "Lulus" : "Tidak Lulus"}
+                                <span
+                                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold
+                                  ${
+                                    score.statusKelulusan
+                                      ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400"
+                                      : "bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-400"
+                                  }`}
+                                >
+                                  {score.statusKelulusan
+                                    ? "Lulus"
+                                    : "Tidak Lulus"}
                                 </span>
                               </td>
                               <td className="px-6 py-4 text-center flex items-center justify-center gap-2">
@@ -806,7 +987,9 @@ export default function AdminPage() {
                                   <Edit className="w-4 h-4" />
                                 </button>
                                 <button
-                                  onClick={() => openDeleteConfirm("score", score)}
+                                  onClick={() =>
+                                    openDeleteConfirm("score", score)
+                                  }
                                   className="p-2 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-lg transition-all"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -833,10 +1016,15 @@ export default function AdminPage() {
             <div className="flex items-center justify-between border-b border-border/40 p-5 bg-muted/30">
               <h3 className="font-bold text-lg text-foreground">
                 {modalType === "delete" && "Konfirmasi Hapus"}
-                {modalType === "add" && `Tambah ${targetType === "teacher" ? "Guru" : targetType === "student" ? "Siswa" : "Mata Pelajaran"}`}
-                {modalType === "edit" && `Ubah ${targetType === "teacher" ? "Guru" : targetType === "student" ? "Siswa" : targetType === "subject" ? "Mata Pelajaran" : "Nilai"}`}
+                {modalType === "add" &&
+                  `Tambah ${targetType === "teacher" ? "Guru" : targetType === "student" ? "Siswa" : "Mata Pelajaran"}`}
+                {modalType === "edit" &&
+                  `Ubah ${targetType === "teacher" ? "Guru" : targetType === "student" ? "Siswa" : targetType === "subject" ? "Mata Pelajaran" : "Nilai"}`}
               </h3>
-              <button onClick={resetForm} className="p-1 hover:bg-muted rounded-full transition-all text-muted-foreground hover:text-foreground">
+              <button
+                onClick={resetForm}
+                className="p-1 hover:bg-muted rounded-full transition-all text-muted-foreground hover:text-foreground"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -846,14 +1034,17 @@ export default function AdminPage() {
               {modalType === "delete" ? (
                 <div className="space-y-4">
                   <p className="text-sm text-muted-foreground">
-                    Apakah Anda yakin ingin menghapus data ini secara permanen? Tindakan ini tidak dapat dibatalkan.
+                    Apakah Anda yakin ingin menghapus data ini secara permanen?
+                    Tindakan ini tidak dapat dibatalkan.
                   </p>
                   {selectedItem && (
                     <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl">
-                      <p className="text-xs font-semibold text-rose-600 uppercase tracking-wider">Data yang Dihapus:</p>
+                      <p className="text-xs font-semibold text-rose-600 uppercase tracking-wider">
+                        Data yang Dihapus:
+                      </p>
                       <p className="font-bold text-sm text-foreground mt-1">
-                        {targetType === "score" 
-                          ? `Nilai ${selectedItem.student?.name} - ${selectedItem.subject?.name}` 
+                        {targetType === "score"
+                          ? `Nilai ${selectedItem.student?.name} - ${selectedItem.subject?.name}`
                           : selectedItem.name}
                       </p>
                     </div>
@@ -877,9 +1068,13 @@ export default function AdminPage() {
               ) : (
                 <>
                   {/* Common fields for Teacher/Student/Subject ADD & EDIT */}
-                  {(targetType === "teacher" || targetType === "student" || targetType === "subject") && (
+                  {(targetType === "teacher" ||
+                    targetType === "student" ||
+                    targetType === "subject") && (
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Nama Lengkap</label>
+                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        Nama Lengkap
+                      </label>
                       <input
                         type="text"
                         required
@@ -892,37 +1087,44 @@ export default function AdminPage() {
                   )}
 
                   {/* Fields for Adding Teacher or Student (Requires Email & Password) */}
-                  {modalType === "add" && (targetType === "teacher" || targetType === "student") && (
-                    <>
-                      <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email</label>
-                        <input
-                          type="email"
-                          required
-                          value={formEmail}
-                          onChange={(e) => setFormEmail(e.target.value)}
-                          placeholder="Contoh: diana@sekolah.com"
-                          className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
-                        />
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Password</label>
-                        <input
-                          type="password"
-                          required
-                          value={formPassword}
-                          onChange={(e) => setFormPassword(e.target.value)}
-                          placeholder="Password minimal 6 karakter"
-                          className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
-                        />
-                      </div>
-                    </>
-                  )}
+                  {modalType === "add" &&
+                    (targetType === "teacher" || targetType === "student") && (
+                      <>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            value={formEmail}
+                            onChange={(e) => setFormEmail(e.target.value)}
+                            placeholder="Contoh: diana@sekolah.com"
+                            className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
+                          />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                            Password
+                          </label>
+                          <input
+                            type="password"
+                            required
+                            value={formPassword}
+                            onChange={(e) => setFormPassword(e.target.value)}
+                            placeholder="Password minimal 6 karakter"
+                            className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
+                          />
+                        </div>
+                      </>
+                    )}
 
                   {/* Teacher specific fields */}
                   {targetType === "teacher" && (
                     <div className="flex flex-col gap-1">
-                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Mata Pelajaran</label>
+                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        Mata Pelajaran
+                      </label>
                       <select
                         value={formSubjectId}
                         onChange={(e) => setFormSubjectId(e.target.value)}
@@ -941,7 +1143,9 @@ export default function AdminPage() {
                   {targetType === "student" && (
                     <>
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">NISN</label>
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          NISN
+                        </label>
                         <input
                           type="text"
                           required
@@ -952,7 +1156,9 @@ export default function AdminPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Kelas</label>
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Kelas
+                        </label>
                         <input
                           type="text"
                           required
@@ -969,42 +1175,64 @@ export default function AdminPage() {
                   {targetType === "score" && (
                     <>
                       <div className="p-3 bg-muted/40 rounded-xl text-xs space-y-1">
-                        <p><span className="font-semibold text-muted-foreground">Siswa:</span> {selectedItem?.student?.name}</p>
-                        <p><span className="font-semibold text-muted-foreground">Mapel:</span> {selectedItem?.subject?.name}</p>
+                        <p>
+                          <span className="font-semibold text-muted-foreground">
+                            Siswa:
+                          </span>{" "}
+                          {selectedItem?.student?.name}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-muted-foreground">
+                            Mapel:
+                          </span>{" "}
+                          {selectedItem?.subject?.name}
+                        </p>
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Nilai Tugas</label>
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Nilai Tugas
+                        </label>
                         <input
                           type="number"
                           required
                           min={0}
                           max={100}
                           value={formNilaiTugas}
-                          onChange={(e) => setFormNilaiTugas(Number(e.target.value))}
+                          onChange={(e) =>
+                            setFormNilaiTugas(Number(e.target.value))
+                          }
                           className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Nilai UTS</label>
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Nilai UTS
+                        </label>
                         <input
                           type="number"
                           required
                           min={0}
                           max={100}
                           value={formNilaiUts}
-                          onChange={(e) => setFormNilaiUts(Number(e.target.value))}
+                          onChange={(e) =>
+                            setFormNilaiUts(Number(e.target.value))
+                          }
                           className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Nilai UAS</label>
+                        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Nilai UAS
+                        </label>
                         <input
                           type="number"
                           required
                           min={0}
                           max={100}
                           value={formNilaiUas}
-                          onChange={(e) => setFormNilaiUas(Number(e.target.value))}
+                          onChange={(e) =>
+                            setFormNilaiUas(Number(e.target.value))
+                          }
                           className="px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-rose-500 bg-background"
                         />
                       </div>

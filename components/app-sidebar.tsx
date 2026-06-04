@@ -11,15 +11,15 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ROUTES } from "@/constants/route";
-import { 
-  BookText, 
-  LayoutDashboard, 
-  ClipboardList, 
-  BookOpen, 
-  Shield, 
-  GraduationCap, 
+import {
+  BookText,
+  LayoutDashboard,
+  ClipboardList,
+  BookOpen,
+  Shield,
+  GraduationCap,
   LogOut,
-  Loader2
+  Loader2,
 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "./ui/button";
@@ -42,7 +42,11 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Button variant="ghost" size="lg" className="w-full justify-start gap-2 px-3 font-extrabold text-indigo-600 dark:text-indigo-400">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="w-full justify-start gap-2 px-3 font-extrabold text-indigo-600 dark:text-indigo-400"
+              >
                 <BookOpen className="h-5 w-5" />
                 <span>SIPNS Cendekia</span>
               </Button>
@@ -90,7 +94,10 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton
                         onClick={() => router.push(ROUTES.NILAI)}
-                        isActive={pathname === ROUTES.NILAI || pathname === ROUTES.CREATE_NILAI}
+                        isActive={
+                          pathname === ROUTES.NILAI ||
+                          pathname === ROUTES.CREATE_NILAI
+                        }
                       >
                         <BookText className="h-4 w-4" />
                         <span>Kelola Nilai</span>
@@ -127,8 +134,8 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="p-4 border-t border-border/40">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           onClick={handleLogout}
           className="w-full flex items-center justify-center gap-2 text-rose-600 border-rose-200 hover:bg-rose-50 hover:text-rose-700 dark:text-rose-400 dark:border-rose-900/50 dark:hover:bg-rose-950/20"
         >

@@ -8,7 +8,10 @@ export interface UpdateStudentParams {
   class?: string;
 }
 
-export const updateStudent = async ({ id, ...data }: UpdateStudentParams): Promise<Student> => {
+export const updateStudent = async ({
+  id,
+  ...data
+}: UpdateStudentParams): Promise<Student> => {
   const response = await api.patch(`/students/${id}`, data);
   return response.data;
 };

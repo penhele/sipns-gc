@@ -50,13 +50,17 @@ export default function TextField({
             }
             let newValue =
               type === "number" ? Number(e.target.value) : e.target.value;
-            
+
             // Enforce and clamp min/max range for number inputs
-            if (type === "number" && typeof newValue === "number" && !isNaN(newValue)) {
+            if (
+              type === "number" &&
+              typeof newValue === "number" &&
+              !isNaN(newValue)
+            ) {
               if (min !== undefined && newValue < min) newValue = min;
               if (max !== undefined && newValue > max) newValue = max;
             }
-            
+
             field.handleChange(newValue as any);
           }}
           onBlur={field.handleBlur}

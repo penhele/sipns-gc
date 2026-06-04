@@ -9,7 +9,9 @@ export interface CreateStudentParams {
   password: string;
 }
 
-export const createStudent = async (data: CreateStudentParams): Promise<Student> => {
+export const createStudent = async (
+  data: CreateStudentParams,
+): Promise<Student> => {
   const response = await api.post("/students", data);
   return response.data;
 };
