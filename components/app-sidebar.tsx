@@ -11,8 +11,9 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ROUTES } from "@/constants/route";
-import { ArrowUpRight, BookText, LayoutDashboard, ClipboardList } from "lucide-react";
+import { ArrowUpRight, BookText, LayoutDashboard, ClipboardList, BookOpen } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
+import { Button } from "./ui/button";
 
 export function AppSidebar() {
   const router = useRouter();
@@ -20,12 +21,25 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader />
+      <SidebarHeader >
+        <SidebarMenu>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Button variant={"ghost"} size={'lg'}>
+
+                <BookOpen />
+                SIPSN
+              </Button>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton 
+              <SidebarMenuButton
                 onClick={() => router.push(ROUTES.HOME)}
                 isActive={pathname === ROUTES.HOME}
               >
@@ -55,6 +69,6 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
-    </Sidebar>
+    </Sidebar >
   );
 }

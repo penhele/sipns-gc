@@ -1,15 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/constants/route";
 import useMe from "@/features/auth/hooks/use-me";
 import useStudents from "@/features/student/hooks/use-students";
 import { useAppForm } from "@/hooks/use-app-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createScore } from "../api/create-score";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { ROUTES } from "@/constants/route";
-import { getScoresQueryOptions } from "../queries/score-queries";
+import { toast } from "sonner";
+import { createScore } from "../api/create-score";
+import { createScoreSchema } from "../schema/score.schema";
+import { revalidateLogic } from "@tanstack/react-form";
 
 export default function CreateScoreForm() {
   const router = useRouter();
@@ -17,32 +18,38 @@ export default function CreateScoreForm() {
   const { data } = useStudents();
   const { data: me } = useMe();
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
     mutationFn: createScore,
     onSuccess(data, variables, onMutateResult, context) {
       toast.success("Berhasil menambahkan nilai");
-      router.push(ROUTES.NILAI)
-      queryClient.invalidateQueries({ queryKey: ["scores"] })
+      router.push(ROUTES.NILAI);
+      queryClient.invalidateQueries({ queryKey: ["scores"] });
     },
     onError(error, variables, onMutateResult, context) {
       toast.error("Gagal menambahkan score");
     },
   });
 
-  console.log(me)
-
   const form = useAppForm({
     defaultValues: {
       teacherId: me?.teacher?.id ?? "",
       subjectId: me?.teacher?.subjectId ?? "",
       studentId: "",
-      nilaiTugas: "",
-      nilaiUts: "",
-      nilaiUas: "",
+      nilaiTugas: "" as unknown as number,
+      nilaiUts: "" as unknown as number,
+      nilaiUas: "" as unknown as number,
     },
+    validators: {
+      onChange: createScoreSchema,
+    },
+    validationLogic: revalidateLogic({
+      mode: "submit",
+      modeAfterSubmission: "blur",
+    }),
     onSubmit: async ({ value }) => {
+      console.log(value);
       await mutateAsync(value);
     },
   });
@@ -54,9 +61,9 @@ export default function CreateScoreForm() {
           e.preventDefault();
           form.handleSubmit(e);
         }}
-        className="space-y-8"
+        className="space-y-4"
       >
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-4">
           <form.AppField name="teacherId">
             {(field) => (
               <field.TextField

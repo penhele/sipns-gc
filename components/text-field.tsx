@@ -8,6 +8,7 @@ import {
 } from "./ui/input-group";
 import { useFieldContext } from "@/hooks/use-app-form";
 import { cn } from "@/lib/utils";
+import { FieldInfo } from "./field-info";
 
 type Props = {
   label: string;
@@ -30,13 +31,18 @@ export default function TextField({
 
   return (
     <Field className={cn(className)}>
-      <FieldLabel>{label}</FieldLabel>
+      <div className="flex flex-row justify-between">
+        <FieldLabel>{label}</FieldLabel>
+        <FieldInfo field={field} />
+      </div>
       <InputGroup>
         <InputGroupInput
           type={showPassword ? "text" : type}
           value={field.state.value}
           onChange={(e) => {
-            field.handleChange(e.target.value);
+            const newValue =
+              type === "number" ? Number(e.target.value) : e.target.value;
+            field.handleChange(newValue as any);
           }}
           onBlur={field.handleBlur}
           readOnly={readonly}

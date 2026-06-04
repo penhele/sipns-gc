@@ -10,7 +10,7 @@ import useMe from "@/features/auth/hooks/use-me";
 
 export default function ScorePage() {
     const { data: me, isLoading: isLoadingMe } = useMe()
-    const { data, isLoading: isLoadingScores } = useScores(me?.teacher?.subjectId)
+    const { data, isLoading: isLoadingScores } = useScores(me?.teacher?.id)
 
     const isLoading = isLoadingMe || isLoadingScores
 
