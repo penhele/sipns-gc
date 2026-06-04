@@ -5,11 +5,13 @@ export function proxy(request: NextRequest) {
   const role = request.cookies.get("role")?.value;
 
   const isAdminRoute = request.nextUrl.pathname.startsWith("/dashboard/admin");
-  const isStudentRoute = request.nextUrl.pathname.startsWith("/dashboard/student");
-  const isTeacherRoute = request.nextUrl.pathname.startsWith("/dashboard/teacher");
+  const isStudentRoute =
+    request.nextUrl.pathname.startsWith("/dashboard/student");
+  const isTeacherRoute =
+    request.nextUrl.pathname.startsWith("/dashboard/teacher");
 
   // belum login
-  if (!token) {
+  if (!token && (isAdminRoute || isStudentRoute || isTeacherRoute)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
