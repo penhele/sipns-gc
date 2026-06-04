@@ -36,6 +36,7 @@ export default function CreateScoreForm() {
   const form = useAppForm({
     defaultValues: {
       teacherId: me?.teacher?.id ?? "",
+      subjectId: me?.teacher?.subjectId ?? "",
       studentId: "",
       nilaiTugas: "",
       nilaiUts: "",
@@ -53,13 +54,23 @@ export default function CreateScoreForm() {
           e.preventDefault();
           form.handleSubmit(e);
         }}
-        className="space-y-4"
+        className="space-y-8"
       >
         <div className="grid grid-cols-2 gap-2">
           <form.AppField name="teacherId">
             {(field) => (
               <field.TextField
                 label="ID Guru"
+                className="col-span-2"
+                readonly
+              />
+            )}
+          </form.AppField>
+
+          <form.AppField name="subjectId">
+            {(field) => (
+              <field.TextField
+                label="ID Mata Pelajaran"
                 className="col-span-2"
                 readonly
               />

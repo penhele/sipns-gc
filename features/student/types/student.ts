@@ -1,3 +1,5 @@
+import { User } from "@/features/auth/types/user";
+
 export interface Student {
   id: string;
   nisn: string;
@@ -6,4 +8,5 @@ export interface Student {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
+  user?: User;
 }

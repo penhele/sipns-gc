@@ -11,11 +11,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ROUTES } from "@/constants/route";
-import { ArrowUpRight, BookText, LayoutDashboard } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ArrowUpRight, BookText, LayoutDashboard, ClipboardList } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
 
 export function AppSidebar() {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Sidebar>
@@ -24,7 +25,10 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton onClick={() => router.push(ROUTES.HOME)}>
+              <SidebarMenuButton 
+                onClick={() => router.push(ROUTES.HOME)}
+                isActive={pathname === ROUTES.HOME}
+              >
                 <LayoutDashboard />
                 Dashboard
               </SidebarMenuButton>
@@ -32,9 +36,19 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 onClick={() => router.push(ROUTES.NILAI)}
+                isActive={pathname === ROUTES.NILAI || pathname === ROUTES.CREATE_NILAI}
               >
                 <BookText />
                 Kelola Nilai
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                onClick={() => router.push(ROUTES.REKAP)}
+                isActive={pathname === ROUTES.REKAP}
+              >
+                <ClipboardList />
+                Rekap Nilai Siswa
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
