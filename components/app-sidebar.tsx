@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ROUTES } from "@/constants/route";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BookText, LayoutDashboard } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export function AppSidebar() {
@@ -24,11 +24,17 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
+              <SidebarMenuButton onClick={() => router.push(ROUTES.HOME)}>
+                <LayoutDashboard />
+                Dashboard
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
               <SidebarMenuButton
-                onClick={() => router.push(ROUTES.CREATE_NILAI)}
+                onClick={() => router.push(ROUTES.NILAI)}
               >
-                <ArrowUpRight />
-                Nilai
+                <BookText />
+                Kelola Nilai
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
