@@ -1,4 +1,4 @@
-import ScorePage from "@/features/score/score-page";
+import ScorePage from "@/features/dashboard/score/score-page";
 
 export default function Page() {
     return <ScorePage/>

@@ -1,5 +1,5 @@
 import { api } from "@/lib/api/axios";
-import { CreateScorePayload } from "../types/score";
+import { CreateScorePayload } from "../types/create-score-payload";
 
 export const createScore = async (data: CreateScorePayload) => {
   const response = await api.post("/scores", {
