@@ -20,6 +20,9 @@ import { useState } from "react";
 import StudentTable from "@/features/student/components/student-table";
 import useStudents from "@/features/student/hooks/use-students";
 import useStudent from "@/features/student/hooks/use-student";
+import LabelSection from "@/components/label-section";
+import StatCard from "./components/stat-card";
+import TeacherCard from "./components/teacher-card";
 
 export default function StudentPage() {
   const { data: me, isLoading: isLoadingMe } = useMe();
@@ -111,143 +114,63 @@ export default function StudentPage() {
         <>
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Card className="bg-gradient-to-br from-sky-500/10 to-sky-600/5 border-sky-200/50 dark:border-sky-800/50 hover:shadow-md transition-all duration-300">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-sky-700 dark:text-sky-400">
-                  Total Mata Pelajaran
-                </CardTitle>
-                <div className="p-2 bg-sky-100 dark:bg-sky-900/40 rounded-lg">
-                  <BookOpen className="h-4 w-4 text-sky-600 dark:text-sky-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">{totalSubjects}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Mata pelajaran dinilai
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border-emerald-200/50 dark:border-emerald-800/50 hover:shadow-md transition-all duration-300">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-                  Lulus Evaluasi
-                </CardTitle>
-                <div className="p-2 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
-                  <Award className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-                  {passedCount}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Standar kelulusan (&ge;75) terpenuhi
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border-indigo-200/50 dark:border-indigo-800/50 hover:shadow-md transition-all duration-300">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-indigo-700 dark:text-indigo-400">
-                  Rata-rata Nilai Akhir
-                </CardTitle>
-                <div className="p-2 bg-indigo-100 dark:bg-indigo-900/40 rounded-lg">
-                  <TrendingUp className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
-                  {gpa}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Indeks rata-rata semester ini
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-200/50 dark:border-purple-800/50 hover:shadow-md transition-all duration-300">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-purple-700 dark:text-purple-400">
-                  Total Guru Pengajar
-                </CardTitle>
-                <div className="p-2 bg-purple-100 dark:bg-purple-900/40 rounded-lg">
-                  <Users className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-                  {teachers.length}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Pendidik aktif terdaftar
-                </p>
-              </CardContent>
-            </Card>
+            <StatCard
+              title="Total Mata Pelajaran"
+              Icon={BookOpen}
+              value={totalSubjects}
+              description="Mata pelajaran dinilai"
+              color="sky"
+            />
+            <StatCard
+              title="Lulus Evaluasi"
+              Icon={Award}
+              value={passedCount}
+              description="Standar kelulusan (&ge;75) terpenuhi"
+              color="emerald"
+            />
+            <StatCard
+              title="Rata-rata Nilai Akhir"
+              Icon={TrendingUp}
+              value={gpa}
+              description="Indeks rata-rata semester ini"
+              color="indigo"
+            />
+            <StatCard
+              title="Total Guru Pengajar"
+              Icon={TrendingUp}
+              value={teachers.length}
+              description="Pendidik aktif terdaftar"
+              color="purple"
+            />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Side: Detailed Scores */}
             <div className="flex flex-col space-y-4 lg:col-span-2">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                <BookMarked className="w-5 h-5 text-sky-500" />
-                Laporan Nilai Belajar
-              </h2>
+              <LabelSection
+                Icon={BookMarked}
+                label="Laporan Nilai Belajar"
+                color="blue"
+              />
 
               <StudentTable />
             </div>
 
             {/* Right Side: Teachers & Subjects List */}
             <div className="flex flex-col space-y-4 lg:col-span-1">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                  <Users className="w-5 h-5 text-purple-500" />
-                  Daftar Guru Pengajar
-                </h2>
-              </div>
+              <LabelSection
+                Icon={Users}
+                label="Daftar Guru Pengajar"
+                color="purple"
+              />
 
-              {/* Search Bar */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Cari guru atau mata pelajaran..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 text-sm bg-muted/50 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary focus:bg-background transition-all"
-                />
-              </div>
-
-              <div className="flex flex-col space-y-3 overflow-y-auto max-h-[480px] pr-1">
-                {filteredTeachers.length === 0 ? (
-                  <div className="text-center py-8 text-sm text-muted-foreground bg-muted/20 border border-dashed rounded-2xl">
-                    Tidak menemukan guru pengajar.
-                  </div>
-                ) : (
-                  filteredTeachers.map((teacher) => (
-                    <Card
-                      key={teacher.id}
-                      className="hover:shadow-sm hover:border-primary/30 transition-all duration-300"
-                    >
-                      <CardContent className="p-4 flex items-center gap-4">
-                        <div className="h-10 w-10 bg-purple-500/10 text-purple-500 dark:bg-purple-500/20 dark:text-purple-400 rounded-full flex items-center justify-center font-bold">
-                          {teacher.name.charAt(0)}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-sm text-foreground truncate">
-                            {teacher.name}
-                          </h4>
-                          <p className="text-xs text-muted-foreground mt-0.5 truncate">
-                            Mata Pelajaran:{" "}
-                            <span className="font-medium text-purple-600 dark:text-purple-400">
-                              {teacher.subject?.name || "Umum"}
-                            </span>
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                )}
+              <div className="space-y-2">
+                {teachersData?.map((teacher) => (
+                  <TeacherCard
+                    name={teacher.name}
+                    subject={teacher.subject?.name ?? ""}
+                  />
+                ))}
               </div>
             </div>
           </div>

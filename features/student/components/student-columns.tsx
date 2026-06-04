@@ -7,7 +7,7 @@ export const studentColumns: ColumnDef<Score>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
-          <span className="font-bold text-foreground">
+          <span className="font-bold text-sm text-foreground">
             {row.original.subject?.name}
           </span>
           <span className="text-xs font-normal text-muted-foreground">
