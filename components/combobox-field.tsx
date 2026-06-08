@@ -9,6 +9,7 @@ import {
 } from "./ui/combobox";
 import { Field, FieldLabel } from "./ui/field";
 import { cn } from "@/lib/utils";
+import React from "react";
 
 type Props = {
   label: string;
@@ -19,25 +20,33 @@ type Props = {
 export default function ComboboxField({ label, items, className }: Props) {
   const field = useFieldContext<string>();
 
+  const selectedItem = React.useMemo(() => {
+    return items?.find((item: any) => item.id === field.state.value) || null;
+  }, [items, field.state.value]);
+
   return (
     <Field className={cn(className)}>
       <FieldLabel>{label}</FieldLabel>
 
       <Combobox
         items={items}
-        value={field.state.value}
-        onValueChange={(value) => {
-          if (value === null) return;
-          field.handleChange(value);
+        value={selectedItem}
+        onValueChange={(val: any) => {
+          if (val === null) {
+            field.handleChange("" as any);
+            return;
+          }
+          field.handleChange(val.id);
         }}
+        itemToStringLabel={(item: any) => (item ? item.name : "")}
       >
         <ComboboxInput placeholder="Select a name" />
 
         <ComboboxContent>
           <ComboboxEmpty>No items found.</ComboboxEmpty>
           <ComboboxList>
-            {(item) => (
-              <ComboboxItem key={item.id} value={item.id}>
+            {(item: any) => (
+              <ComboboxItem key={item.id} value={item}>
                 {item.name}
               </ComboboxItem>
             )}

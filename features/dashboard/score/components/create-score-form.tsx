@@ -11,6 +11,9 @@ import { toast } from "sonner";
 import { createScore } from "../api/create-score";
 import { createScoreSchema } from "../schema/score.schema";
 import { revalidateLogic } from "@tanstack/react-form";
+import { useEffect } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function CreateScoreForm() {
   const router = useRouter();
@@ -54,6 +57,15 @@ export default function CreateScoreForm() {
     },
   });
 
+  useEffect(() => {
+    if (me?.teacher) {
+      form.setFieldValue("teacherId", me.teacher.id);
+      form.setFieldValue("subjectId", me.teacher.subjectId);
+    }
+  }, [me, form]);
+
+  console.log(me);
+
   return (
     <form.AppForm>
       <form
@@ -64,25 +76,15 @@ export default function CreateScoreForm() {
         className="space-y-4"
       >
         <div className="grid grid-cols-2 gap-4">
-          <form.AppField name="teacherId">
-            {(field) => (
-              <field.TextField
-                label="ID Guru"
-                className="col-span-2"
-                readonly
-              />
-            )}
-          </form.AppField>
+          <div className="flex flex-col space-y-1.5 col-span-2">
+            <Label className="font-semibold">Nama Guru</Label>
+            <Input value={me?.teacher?.name ?? ""} readOnly />
+          </div>
 
-          <form.AppField name="subjectId">
-            {(field) => (
-              <field.TextField
-                label="ID Mata Pelajaran"
-                className="col-span-2"
-                readonly
-              />
-            )}
-          </form.AppField>
+          <div className="flex flex-col space-y-1.5 col-span-2">
+            <Label className="font-semibold">Mata Pelajaran</Label>
+            <Input value={me?.teacher?.subject?.name ?? ""} readOnly />
+          </div>
 
           <form.AppField name="studentId">
             {(field) => (
